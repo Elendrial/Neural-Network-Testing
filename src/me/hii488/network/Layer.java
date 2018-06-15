@@ -1,0 +1,27 @@
+package me.hii488.network;
+
+public class Layer {
+	
+	public Node[] nodes;
+	
+	public Layer(int nodesInLayer, int previousConnections) {
+		nodes = new Node[nodesInLayer];
+		
+		for(int i = 0; i < nodes.length; i++) {
+			nodes[i] = new Node(previousConnections);
+		}
+	}
+	
+	public double[] getOutput(double[] input) {
+		double[] output = new double[nodes.length];
+		for(int i = 0; i < output.length; i++) {
+			output[i] = nodes[i].getOutput(input);
+		}
+		
+		return output;
+	}
+	
+	public void randomise() {
+		for(Node n : nodes) n.randomise();
+	}
+}
