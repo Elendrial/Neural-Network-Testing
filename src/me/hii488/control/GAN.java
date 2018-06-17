@@ -5,7 +5,7 @@ import me.hii488.tests.SaveLoadTest;
 public class GAN {
 	
 	public static void main(String[] args) {
-		SaveLoadTest.test();
+		System.out.println(SaveLoadTest.exactTest());
 	}
 	
 }
