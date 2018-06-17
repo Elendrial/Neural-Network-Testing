@@ -1,7 +1,10 @@
 package me.hii488.network;
 
-public class Node {
+import java.io.Serializable;
+
+public class Node implements Serializable{
 	
+	private static final long serialVersionUID = 397101734162241004L;
 	public double[] weights;
 	public double bias;
 	public double lastOutput;

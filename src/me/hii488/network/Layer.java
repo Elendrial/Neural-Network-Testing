@@ -1,7 +1,10 @@
 package me.hii488.network;
 
-public class Layer {
+import java.io.Serializable;
+
+public class Layer implements Serializable{
 	
+	private static final long serialVersionUID = 3563307408734079388L;
 	public Node[] nodes;
 	
 	public Layer(int nodesInLayer, int previousConnections) {
