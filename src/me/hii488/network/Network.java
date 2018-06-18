@@ -12,9 +12,9 @@ public class Network implements Serializable {
 	private static final long serialVersionUID = 2307104666063622823L;
 	public static Random random = new Random();
 	
-	private Layer[] layers;
+	protected Layer[] layers;
 	
-	private Network() {}
+	protected Network() {}
 	
 	public Network(int inputs, int[] hiddenLayers, int outputs) {
 		layers = new Layer[hiddenLayers.length+1];
@@ -77,6 +77,14 @@ public class Network implements Serializable {
 			
 			return new Network();
 		}
+	}
+	
+	public int getInputNumber() {
+		return layers[0].nodes[0].weights.length;
+	}
+	
+	public int getOutputNumber() {
+		return layers[layers.length-1].nodes.length;
 	}
 	
 }

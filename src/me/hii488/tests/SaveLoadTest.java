@@ -5,11 +5,12 @@ import java.util.Arrays;
 
 import me.hii488.network.Layer;
 import me.hii488.network.Network;
+import me.hii488.network.specialisations.GeneratorNetwork;
 
 public class SaveLoadTest {
 	
-	public static boolean roughtTest() {
 		Network n = new Network(3, new int[] {}, 1);
+	public static boolean roughTest() {
 		double[] input = {0.5, 0.5, 0.5};
 		
 		n.randomise();
@@ -27,7 +28,6 @@ public class SaveLoadTest {
 	// I could have just changed 'layers' and 'nodes' to be public, buuuut I didn't want to
 	public static boolean exactTest() {
 		Network n = new Network(3, new int[] {}, 1);
-		double[] input = {0.5, 0.5, 0.5};
 		
 		n.randomise();
 		n.saveNetwork("d:/temp/saveloadTest.net");
@@ -55,6 +55,22 @@ public class SaveLoadTest {
 			return false;
 		}
 		
+	}
+	
+	public static boolean specialisedNetworkTest() {
+		GeneratorNetwork n = new GeneratorNetwork(3, new int[] {16*16, 16*16,8*8,4*4, 2*2}, 1);
+		double[] input = {0.5, 0.5, 0.5};
+		
+		n.randomise();
+		double[] output = n.getOutput(input);
+		
+		n.saveNetwork("d:/temp/saveloadTest.net");
+		
+		n = null;
+		System.gc();
+		
+		Network n2 = Network.loadNetwork("d:/temp/saveloadTest.net");
+		return Arrays.equals(n2.getOutput(input), output) && (n2 instanceof GeneratorNetwork);
 	}
 	
 }
