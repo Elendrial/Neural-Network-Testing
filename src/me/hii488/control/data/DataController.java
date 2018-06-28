@@ -4,5 +4,6 @@ public interface DataController {
 	
 	public double[] getNextTrainingInput();
 	public double[] getNextTestingInput();
+	public void setInputSize(int i);
 	
 }
