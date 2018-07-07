@@ -9,27 +9,44 @@ public class Trainer {
 	public GeneratorNetwork generator;
 	public Network discriminator;
 	public DataController data;
+	public double learningRate;
 	
-	public Trainer(GeneratorNetwork g, Network d, DataController da) {
+	public Trainer(GeneratorNetwork g, Network d, DataController da, double learningRate) {
 		generator = g;
 		discriminator = d;
 		data = da;
 	}
 	
-	public void train(int iterations, int iterationSize) {
-		double[][] descOutputs = new double[iterationSize][discriminator.getOutputNumber()];
+	public void train(int iterations, int batchSize) {
+		double[][] actualOutputs = new double[batchSize][discriminator.getOutputNumber()];
+		double[][] expectedOutputs = new double[batchSize][discriminator.getOutputNumber()];
+		
+		// TODO: Setup an identical set of networks with the weights/biases being the proposed change
+		// Starting as all 0's, this is updated with proposed changes for each output test
+		// newWeight = originalWeight - (learnRate/batchSize) * weightChange
+		// Same for biases
 		
 		while(iterations-- > 0) {
 			
-			for(int i = 0; i < iterationSize/2; i++) {
-				descOutputs[i] = discriminator.getOutput(generator.generateOutput());
+			for(int i = 0; i < batchSize/2; i++) {
+				actualOutputs[i] = discriminator.getOutput(generator.generateOutput());
 			}
 			
-			for(int i = iterationSize/2; i < iterationSize; i++) {
-				descOutputs[i] = discriminator.getOutput(data.getNextTrainingInput());
+			for(int i = batchSize/2; i < batchSize; i++) {
+				actualOutputs[i] = discriminator.getOutput(data.getNextTrainingInput());
+				expectedOutputs[i] = data.getCurrentExpectedOutput();
 			}
+			
 			
 		}
+	}
+	
+	public void setLearningRate(double lr) {
+		learningRate = lr;
+	}
+	
+	public double getLearningRate() {
+		return learningRate;
 	}
 	
 }

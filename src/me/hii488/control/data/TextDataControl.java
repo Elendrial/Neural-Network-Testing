@@ -34,6 +34,12 @@ public class TextDataControl implements DataController{
 	}
 	
 	@Override
+	public double[] getCurrentExpectedOutput() {
+		//TODO: Should be getNextxInput() without incrementing position.
+		return null;
+	}
+	
+	@Override
 	public void setInputSize(int i) {
 		inputLength = i;
 	}
@@ -49,5 +55,6 @@ public class TextDataControl implements DataController{
 	public void setStartChar(char c) {
 		startChar = c;
 	}
+
 
 }
