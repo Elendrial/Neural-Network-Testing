@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Network implements Serializable {
@@ -48,6 +49,10 @@ public class Network implements Serializable {
 		for(Layer l : layers) l.randomise();
 	}
 	
+	public void setToValue(double d) {
+		for(Layer l : layers) for(Node n : l.nodes) Arrays.setAll(n.weights, a -> d);
+	}
+	
 	public void saveNetwork(String path) {
 		FileOutputStream fileOut;
 		try {
@@ -72,7 +77,7 @@ public class Network implements Serializable {
 			return (Network) result;
 		}
 		catch(Exception e){
-			System.err.println("Failed to load network");
+			System.err.println("Failed to load network:");
 			e.printStackTrace();
 			
 			return new Network();
@@ -87,4 +92,11 @@ public class Network implements Serializable {
 		return layers[layers.length-1].nodes.length;
 	}
 	
+	public Network cloneStructure(){
+		int[] layerSizes = new int[layers.length-1];
+		for(int i = 0; i < layers.length - 1; i++) {
+			layerSizes[i] = layers[i].nodes.length;
+		}
+		return new Network(layers[0].nodes[0].weights.length, layerSizes, layers[layers.length-1].nodes.length);
+	}
 }

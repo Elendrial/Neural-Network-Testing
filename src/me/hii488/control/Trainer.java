@@ -21,10 +21,13 @@ public class Trainer {
 		double[][] actualOutputs = new double[batchSize][discriminator.getOutputNumber()];
 		double[][] expectedOutputs = new double[batchSize][discriminator.getOutputNumber()];
 		
-		// TODO: Setup an identical set of networks with the weights/biases being the proposed change
+		// TODO: Setup an identical set of networks with the weights/biases being the proposed change (DONE)
 		// Starting as all 0's, this is updated with proposed changes for each output test
 		// newWeight = originalWeight - (learnRate/batchSize) * weightChange
 		// Same for biases
+		
+		Network deltaDiscrim = discriminator.cloneStructure();
+		Network deltaGenerator = generator.cloneStructure();
 		
 		while(iterations-- > 0) {
 			
