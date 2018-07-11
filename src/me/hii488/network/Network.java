@@ -49,8 +49,12 @@ public class Network implements Serializable {
 		for(Layer l : layers) l.randomise();
 	}
 	
-	public void setToValue(double d) {
+	public void setToWeightsValue(double d) {
 		for(Layer l : layers) for(Node n : l.nodes) Arrays.setAll(n.weights, a -> d);
+	}
+	
+	public void setBiases(double d) {
+		for(Layer l : layers) for(Node n : l.nodes) n.bias = d;
 	}
 	
 	public void saveNetwork(String path) {
@@ -98,5 +102,42 @@ public class Network implements Serializable {
 			layerSizes[i] = layers[i].nodes.length;
 		}
 		return new Network(layers[0].nodes[0].weights.length, layerSizes, layers[layers.length-1].nodes.length);
+	}
+	
+	public void addNetwork(Network n) {
+		if(!haveSimilarStructure(this, n)) throw new RuntimeException("Networks must have similar structure to add them.");
+		for(int i = 0; i < layers.length; i++) {
+			for(int j = 0; j < layers[i].nodes.length; j++) {
+				
+				layers[i].nodes[j].bias += n.layers[i].nodes[j].bias;
+				for(int k = 0; k < layers[i].nodes[j].weights.length; k++)
+					layers[i].nodes[j].weights[k] += n.layers[i].nodes[j].weights[k];
+				
+			}
+		}
+	}
+	
+	public void scaleNetwork(double d) {
+		for(int i = 0; i < layers.length; i++) {
+			for(int j = 0; j < layers[i].nodes.length; j++) {
+				
+				layers[i].nodes[j].bias *= d;
+				for(int k = 0; k < layers[i].nodes[j].weights.length; k++)
+					layers[i].nodes[j].weights[k] *= d;
+				
+			}
+		}
+	}
+	
+	
+	public static boolean haveSimilarStructure(Network a, Network b) {
+		if(a.layers.length != b.layers.length) return false;
+		for(int i = 0; i < a.layers.length; i++) {
+			if(a.layers[i].nodes.length != b.layers[i].nodes.length) return false;
+			for(int j = 0; j < a.layers[i].nodes.length; j++) {
+				if(a.layers[i].nodes[j].weights.length != b.layers[i].nodes[j].weights.length) return false;
+			}
+		}
+		return true;
 	}
 }
