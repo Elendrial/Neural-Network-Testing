@@ -2,20 +2,25 @@ package me.hii488.network;
 
 import java.io.Serializable;
 
+import me.hii488.network.nodeActivations.Activation;
+
 public class Node implements Serializable{
 	
 	private static final long serialVersionUID = 397101734162241004L;
+	
+	public Activation activation;
 	public double[] weights;
 	public double bias;
-	public double lastOutput;
+	public double weightedInput;
 	
-	public Node(int prevConnections) {
+	public Node(int prevConnections, Activation act) {
 		weights = new double[prevConnections];
+		activation = act;
+		bias = 0;
 		
 		for(int i = 0; i < weights.length; i++)
 			weights[i] = 0;
 		
-		bias = 0;
 	}
 	
 	public void randomise() {
@@ -25,15 +30,13 @@ public class Node implements Serializable{
 	}
 
 	public double getOutput(double[] input) {
-		double temp = bias; 
+		double weightedInput = bias; 
 		
 		for(int i = 0; i < input.length; i++){
-			temp += input[i] * weights[i];
+			weightedInput += input[i] * weights[i];
 		}
 		
-		// Sigmoid function
-		lastOutput = 1/(1 + Math.pow(Math.E, -temp));
-		return lastOutput;
+		return activation.function(weightedInput);
 	}
 	
 }

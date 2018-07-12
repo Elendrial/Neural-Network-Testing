@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Random;
 
+import me.hii488.network.nodeActivations.Activation;
+
 public class Network implements Serializable {
 	private static final long serialVersionUID = 2307104666063622823L;
 	public static Random random = new Random();
@@ -17,21 +19,21 @@ public class Network implements Serializable {
 	
 	protected Network() {}
 	
-	public Network(int inputs, int[] hiddenLayers, int outputs) {
+	public Network(int inputs, int[] hiddenLayers, int outputs, Activation act) {
 		layers = new Layer[hiddenLayers.length+1];
 		
 		if(hiddenLayers.length > 0) {
-			layers[0] = new Layer(hiddenLayers[0], inputs);
+			layers[0] = new Layer(hiddenLayers[0], inputs, act);
 		
 			for(int i = 1; i < layers.length-1; i++) {
-				layers[i] = new Layer(hiddenLayers[i], hiddenLayers[i-1]);
+				layers[i] = new Layer(hiddenLayers[i], hiddenLayers[i-1], act);
 			}
 			
-			layers[layers.length - 1] = new Layer(outputs, hiddenLayers[hiddenLayers.length-1]);
+			layers[layers.length - 1] = new Layer(outputs, hiddenLayers[hiddenLayers.length-1], act);
 		}
 		
 		else {
-			layers[0] = new Layer(outputs, inputs);
+			layers[0] = new Layer(outputs, inputs, act);
 		}
 	}
 	
@@ -101,7 +103,7 @@ public class Network implements Serializable {
 		for(int i = 0; i < layers.length - 1; i++) {
 			layerSizes[i] = layers[i].nodes.length;
 		}
-		return new Network(layers[0].nodes[0].weights.length, layerSizes, layers[layers.length-1].nodes.length);
+		return new Network(layers[0].nodes[0].weights.length, layerSizes, layers[layers.length-1].nodes.length, layers[0].nodes[0].activation);
 	}
 	
 	public void addNetwork(Network n) {

@@ -2,16 +2,18 @@ package me.hii488.network;
 
 import java.io.Serializable;
 
+import me.hii488.network.nodeActivations.Activation;
+
 public class Layer implements Serializable{
 	
 	private static final long serialVersionUID = 3563307408734079388L;
 	public Node[] nodes;
 	
-	public Layer(int nodesInLayer, int previousConnections) {
+	public Layer(int nodesInLayer, int previousConnections, Activation act) {
 		nodes = new Node[nodesInLayer];
 		
 		for(int i = 0; i < nodes.length; i++) {
-			nodes[i] = new Node(previousConnections);
+			nodes[i] = new Node(previousConnections, act);
 		}
 	}
 	

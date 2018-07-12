@@ -24,6 +24,8 @@ public class Trainer {
 		Network deltaDiscrim = discriminator.cloneStructure();
 		Network deltaGenerator = generator.cloneStructure();
 		
+		// TODO: Separate the Discriminator and Generator training times. IE: Train Discrim, then Generator, then discrim... etc, so not at the same time.
+		
 		while(iterations-- > 0) {
 			
 			deltaDiscrim.setToWeightsValue(0);

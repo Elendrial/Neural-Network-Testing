@@ -4,13 +4,14 @@ import java.lang.reflect.Field;
 
 import me.hii488.network.Layer;
 import me.hii488.network.Network;
+import me.hii488.network.nodeActivations.SigmoidActivation;
 
 public class CloneStructureTest {
 	
 	public static boolean test() {
-		Network n = new Network(2, new int[] {3,2}, 5);
+		Network n = new Network(2, new int[] {3,2}, 5, new SigmoidActivation());
 		Network n2 = n.cloneStructure();
-		Network n3 = new Network(1, new int[] {3,5,2}, 5);
+		Network n3 = new Network(1, new int[] {3,5,2}, 5, new SigmoidActivation());
 		boolean asdfn = checkNetworks(n, n2) && !checkNetworks(n, n3);
 		return asdfn;
 	}

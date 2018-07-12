@@ -1,6 +1,8 @@
 package me.hii488.control;
 
 import me.hii488.network.Network;
+import me.hii488.network.nodeActivations.Activation;
+import me.hii488.network.nodeActivations.SigmoidActivation;
 
 public class NetworkBuilder {
 	
@@ -9,6 +11,7 @@ public class NetworkBuilder {
 	private int inputNoiseSize = 5;
 	private int[] discriminatorHidden = new int[] {};
 	private int[] generatorHidden = new int[] {};
+	private Activation act = new SigmoidActivation();
 	
 	public NetworkBuilder() {}
 	public NetworkBuilder(int noiseAmount, int[] generatorHidden, int generatorOutputs, int[] discriminatorHidden, int discriminatorOutputs) {
@@ -39,12 +42,16 @@ public class NetworkBuilder {
 		generatorHidden = i;
 	}
 	
+	public void setNodeActivationType(Activation a) {
+		act = a;
+	}
+	
 	public Network buildDiscriminator() {
-		return new Network(discriminatorInputLength, discriminatorHidden, discriminatorOutputs);
+		return new Network(discriminatorInputLength, discriminatorHidden, discriminatorOutputs, act);
 	}
 	
 	public Network buildGenerator() {
-		return new Network(inputNoiseSize, generatorHidden, discriminatorInputLength);
+		return new Network(inputNoiseSize, generatorHidden, discriminatorInputLength, act);
 	}
 	
 	
