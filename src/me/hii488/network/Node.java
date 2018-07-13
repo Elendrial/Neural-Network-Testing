@@ -30,7 +30,7 @@ public class Node implements Serializable{
 	}
 
 	public double getOutput(double[] input) {
-		double weightedInput = bias; 
+		weightedInput = bias; 
 		
 		for(int i = 0; i < input.length; i++){
 			weightedInput += input[i] * weights[i];
