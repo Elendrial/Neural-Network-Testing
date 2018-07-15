@@ -1,20 +1,20 @@
-package me.hii488.control;
+package me.hii488.control.trainers;
 
 import me.hii488.control.data.DataController;
 import me.hii488.network.Network;
 import me.hii488.network.specialisations.GeneratorNetwork;
 
-public class Trainer {
+public class GANTrainer extends Trainer{
 	
 	public GeneratorNetwork generator;
 	public Network discriminator;
-	public DataController data;
-	public double learningRate;
 	
-	public Trainer(GeneratorNetwork g, Network d, DataController da, double learningRate) {
+	public GANTrainer(GeneratorNetwork g, Network d, DataController da, double learningRate) {
 		generator = g;
 		discriminator = d;
 		data = da;
+
+		this.learningRate = learningRate;
 	}
 	
 	public void train(int iterations, int batchSize) {
@@ -80,14 +80,6 @@ public class Trainer {
 	
 	public void backpropOnGen(double[] expectedOut, double[] actualOut, Network deltaGenerator) {
 		// This might be a tad tricky... Going to have to work out how you differentiate a neural network...
-	}
-	
-	public void setLearningRate(double lr) {
-		learningRate = lr;
-	}
-	
-	public double getLearningRate() {
-		return learningRate;
 	}
 	
 }

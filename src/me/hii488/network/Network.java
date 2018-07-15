@@ -142,4 +142,8 @@ public class Network implements Serializable {
 		}
 		return true;
 	}
+	
+	public Layer[] getLayers() {
+		return layers;
+	}
 }
