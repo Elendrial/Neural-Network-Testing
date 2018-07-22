@@ -52,9 +52,27 @@ public class StandardTrainer extends Trainer {
 			layers[lastLayer].nodes[i].bias = cost.costPrime(actualOut[i], expectedOut[i]) * layers[lastLayer].nodes[i].activation.functionPrime(actualOut[i]);
 		}
 		
-		// Backpropagate this error
+		// Backpropagate this error, using eq^n 45 and BP4 at http://neuralnetworksanddeeplearning.com/chap2.html
+		double nodeError, activationPrime, activation;
 		for(int i = lastLayer-1; i >= 0; i--) {
-			
+			for(int j = 0; j < layers[i].nodes.length; i++) {
+				// Node/Bias Error:
+				nodeError = 0;
+				
+				activationPrime = layers[i].nodes[j].activation.functionPrime(layers[i].nodes[j].weightedInput);
+				for(int k = 0; k < layers[i+1].nodes.length; k++) {
+					nodeError += network.getLayers()[i+1].nodes[k].weights[j] * layers[i+1].nodes[k].bias * activationPrime;
+				}
+				
+				layers[i].nodes[i].bias = nodeError;
+				
+
+				// Weight Error:
+				activation = layers[i].nodes[j].activation.function(layers[i].nodes[j].weightedInput);
+				for(int k = 0; k < layers[i+1].nodes.length; k++)
+					layers[i+1].nodes[k].weights[j] = activation * layers[i+1].nodes[k].bias;
+				
+			}
 		}
 		
 		
