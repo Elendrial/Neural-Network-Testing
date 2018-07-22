@@ -42,7 +42,7 @@ public class StandardTrainer extends Trainer {
 	
 	@Override
 	public double test(int number) {
-		double accuracy = 0, tempacc;
+		double accuracy = 0, tempacc, num = number;
 		double[] actualOutput = new double[network.getOutputNumber()];
 		double[] expectedOutput = new double[network.getOutputNumber()];
 		
@@ -52,13 +52,13 @@ public class StandardTrainer extends Trainer {
 			
 			// TODO: Probably change this to be cost or something? Not sure, will need to check, for the moment this works, should always work, who knows?
 			tempacc = 0;
-			for(int i = 0; i < network.getOutputNumber(); i++) {
+			for(int i = 0; i < network.getOutputNumber(); i++)
 				tempacc += 1 - Math.abs(expectedOutput[i] - actualOutput[i]);
-			}
+			
 			accuracy += tempacc/network.getOutputNumber();
 		}
 		
-		return accuracy/number;
+		return accuracy/num;
 	}
 	
 	private Network backprop(double[] expectedOut, double[] actualOut) {

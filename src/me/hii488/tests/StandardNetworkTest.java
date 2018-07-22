@@ -50,14 +50,20 @@ public class StandardNetworkTest {
 		
 		Trainer t = new StandardTrainer(net, data, new QuadraticCost(), 1);
 		
+		
+		System.out.println(t.test(1000));
+		t.train(1, 30);
+		System.out.println(t.test(1000));
+		t.train(5, 30);
+		System.out.println(t.test(300));
 		t.train(20, 30);
-		System.out.println(t.test(30));
-		t.train(20, 30);
-		System.out.println(t.test(30));
-		t.train(20, 30);
-		System.out.println(t.test(30));
-		t.train(40, 30);
-		System.out.println(t.test(30));
+		System.out.println(t.test(300));
+		t.train(100, 30);
+		System.out.println(t.test(300));
+		t.train(1000, 30);
+		System.out.println(t.test(300));
+		t.train(1000, 30);
+		System.out.println(t.test(300));
 		
 		return t.test(60) > 0.9;
 	}
