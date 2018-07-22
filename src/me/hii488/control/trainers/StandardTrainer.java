@@ -39,7 +39,28 @@ public class StandardTrainer extends Trainer {
 			network.addNetwork(deltaNet);
 		}
 	}
-
+	
+	@Override
+	public double test(int number) {
+		double accuracy = 0, tempacc;
+		double[] actualOutput = new double[network.getOutputNumber()];
+		double[] expectedOutput = new double[network.getOutputNumber()];
+		
+		while(number-- > 0) {
+			actualOutput = network.getOutput(data.getNextTestingInput());
+			expectedOutput = data.getCurrentExpectedOutput();
+			
+			// TODO: Probably change this to be cost or something? Not sure, will need to check, for the moment this works, should always work, who knows?
+			tempacc = 0;
+			for(int i = 0; i < network.getOutputNumber(); i++) {
+				tempacc += 1 - Math.abs(expectedOutput[i] - actualOutput[i]);
+			}
+			accuracy += tempacc/network.getOutputNumber();
+		}
+		
+		return accuracy/number;
+	}
+	
 	private Network backprop(double[] expectedOut, double[] actualOut) {
 		Network n = network.cloneStructure();
 		Layer[] layers = n.getLayers();
@@ -55,14 +76,13 @@ public class StandardTrainer extends Trainer {
 		// Backpropagate this error, using eq^n 45 and BP4 at http://neuralnetworksanddeeplearning.com/chap2.html
 		double nodeError, activationPrime, activation;
 		for(int i = lastLayer-1; i >= 0; i--) {
-			for(int j = 0; j < layers[i].nodes.length; i++) {
+			for(int j = 0; j < layers[i].nodes.length; j++) {
 				// Node/Bias Error:
 				nodeError = 0;
 				
 				activationPrime = layers[i].nodes[j].activation.functionPrime(layers[i].nodes[j].weightedInput);
-				for(int k = 0; k < layers[i+1].nodes.length; k++) {
+				for(int k = 0; k < layers[i+1].nodes.length; k++)
 					nodeError += network.getLayers()[i+1].nodes[k].weights[j] * layers[i+1].nodes[k].bias * activationPrime;
-				}
 				
 				layers[i].nodes[i].bias = nodeError;
 				

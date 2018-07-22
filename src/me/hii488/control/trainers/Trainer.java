@@ -6,7 +6,7 @@ import me.hii488.control.trainers.costfunctions.Cost;
 public abstract class Trainer {
 	
 	public abstract void train(int iterations, int batchSize);
-	
+	public abstract double test(int number);
 
 	public double learningRate;
 	public DataController data;

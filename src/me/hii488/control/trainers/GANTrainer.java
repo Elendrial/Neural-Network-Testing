@@ -81,5 +81,11 @@ public class GANTrainer extends Trainer{
 	public void backpropOnGen(double[] expectedOut, double[] actualOut, Network deltaGenerator) {
 		// This might be a tad tricky... Going to have to work out how you differentiate a neural network...
 	}
+
+	@Override
+	public double test(int number) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

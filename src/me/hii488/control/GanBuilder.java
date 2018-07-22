@@ -4,7 +4,7 @@ import me.hii488.network.Network;
 import me.hii488.network.nodeActivations.Activation;
 import me.hii488.network.nodeActivations.SigmoidActivation;
 
-public class NetworkBuilder {
+public class GanBuilder {
 	
 	private int discriminatorInputLength = 1;
 	private int discriminatorOutputs = 1;
@@ -13,8 +13,8 @@ public class NetworkBuilder {
 	private int[] generatorHidden = new int[] {};
 	private Activation act = new SigmoidActivation();
 	
-	public NetworkBuilder() {}
-	public NetworkBuilder(int noiseAmount, int[] generatorHidden, int generatorOutputs, int[] discriminatorHidden, int discriminatorOutputs) {
+	public GanBuilder() {}
+	public GanBuilder(int noiseAmount, int[] generatorHidden, int generatorOutputs, int[] discriminatorHidden, int discriminatorOutputs) {
 		setGeneratorInputNoiseAmount(noiseAmount);
 		setGeneratorHiddenLayers(generatorHidden);
 		setGeneratorOutputSize(generatorOutputs);
