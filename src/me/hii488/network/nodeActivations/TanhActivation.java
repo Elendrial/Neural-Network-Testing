@@ -16,4 +16,14 @@ public class TanhActivation implements Activation {
 		return "tanh";
 	}
 
+	@Override
+	public double getLowerLimit() {
+		return -1;
+	}
+
+	@Override
+	public double getUpperLimit() {
+		return 1;
+	}
+
 }

@@ -9,4 +9,7 @@ public interface Activation {
 		return "";
 	}
 	
+	public double getLowerLimit();
+	public double getUpperLimit();
+	
 }

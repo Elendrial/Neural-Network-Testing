@@ -119,6 +119,19 @@ public class Network implements Serializable {
 		}
 	}
 	
+	public void averageNetwork(Network n) {
+		if(!haveSimilarStructure(this, n)) throw new RuntimeException("Networks must have similar structure to add them.");
+		for(int i = 0; i < layers.length; i++) {
+			for(int j = 0; j < layers[i].nodes.length; j++) {
+				
+				layers[i].nodes[j].bias = (layers[i].nodes[j].bias + n.layers[i].nodes[j].bias)/2;
+				for(int k = 0; k < layers[i].nodes[j].weights.length; k++)
+					layers[i].nodes[j].weights[k] = (layers[i].nodes[j].weights[k] + n.layers[i].nodes[j].weights[k])/2;
+				
+			}
+		}
+	}
+	
 	public void scaleNetwork(double d) {
 		for(int i = 0; i < layers.length; i++) {
 			for(int j = 0; j < layers[i].nodes.length; j++) {

@@ -1,9 +1,5 @@
 package me.hii488.tests;
 
-import java.util.Arrays;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import me.hii488.control.data.DataController;
 import me.hii488.control.trainers.StandardTrainer;
 import me.hii488.control.trainers.Trainer;

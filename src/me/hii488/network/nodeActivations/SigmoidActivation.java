@@ -17,4 +17,14 @@ public class SigmoidActivation implements Activation {
 		return "sigmoid";
 	}
 
+	@Override
+	public double getLowerLimit() {
+		return 0;
+	}
+
+	@Override
+	public double getUpperLimit() {
+		return 1;
+	}
+
 }

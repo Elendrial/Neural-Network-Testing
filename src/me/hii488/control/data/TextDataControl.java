@@ -35,7 +35,7 @@ public class TextDataControl implements DataController{
 	
 	@Override
 	public double[] getCurrentExpectedOutput() {
-		//TODO: Should be getNextxInput() without incrementing position.
+		
 		return null;
 	}
 	
