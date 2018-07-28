@@ -11,7 +11,7 @@ public class OutputToImage {
 		BufferedImage i = new BufferedImage((int) Math.sqrt(output.length), (int) Math.sqrt(output.length), BufferedImage.TYPE_INT_RGB);
 		
 		int d;
-		double scale = 256/(activationType.getUpperLimit() - activationType.getLowerLimit());
+		double scale = 255/(activationType.getUpperLimit() - activationType.getLowerLimit());
 		for(int y = 0; y < Math.sqrt(output.length); y++) {
 			for(int x = 0; x < Math.sqrt(output.length); x++) {
 				d = (int) ((output[(int) (x + y * Math.sqrt(output.length))] - activationType.getLowerLimit()) * scale);
