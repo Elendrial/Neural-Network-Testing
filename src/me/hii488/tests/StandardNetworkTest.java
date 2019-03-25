@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 import me.hii488.control.data.DataController;
 import me.hii488.control.data.miscTools.OutputToImage;
-import me.hii488.control.trainers.StandardTrainer;
+import me.hii488.control.trainers.BackpropagationTrainer;
 import me.hii488.control.trainers.Trainer;
 import me.hii488.control.trainers.costfunctions.QuadraticCost;
 import me.hii488.network.Network;
@@ -63,7 +63,7 @@ public class StandardNetworkTest {
 		};
 		
 		data.setInputSize(inputs);
-		Trainer t = new StandardTrainer(net, data, new QuadraticCost(), 1);
+		Trainer t = new BackpropagationTrainer(net, data, new QuadraticCost(), 1);
 		
 		System.out.println(t.test(60));
 		doTheTests(t);
@@ -114,13 +114,13 @@ public class StandardNetworkTest {
 			
 		};
 		
-		Trainer t = new StandardTrainer(net, data, new QuadraticCost(), 1);
+		Trainer t = new BackpropagationTrainer(net, data, new QuadraticCost(), 1);
 		return doTheTests(t);
 	}
 	
 	// Can it reflect images?
 	public static boolean imageTest() {
-		Network net = new Network(16, new int[] {}, 64, new SigmoidActivation());
+		Network net = new Network(16, new int[] {16}, 64, new SigmoidActivation());
 		net.randomise();
 		
 		
@@ -168,10 +168,12 @@ public class StandardNetworkTest {
 		
 		
 		
-		Trainer t = new StandardTrainer(net, data, new QuadraticCost(), 0.5);
-		doTheTests(t);
-		for(int i = 0; i < 100; i++) doLotsOfTests(t, 100);
-		boolean output = doTheTests(t);
+		Trainer t = new BackpropagationTrainer(net, data, new QuadraticCost(), 1);
+		System.out.println(t.test(60));
+		t.train(2000, 50);
+		System.out.println(t.test(60));
+		t.train(5000, 50);
+		System.out.println(t.test(60));
 		
 		try {
 		    // retrieve image
@@ -196,7 +198,7 @@ public class StandardNetworkTest {
 			
 		}
 		
-		return output;
+		return t.test(60) > 0.9;
 	}
 	
 	private static boolean doTheTests(Trainer t) {

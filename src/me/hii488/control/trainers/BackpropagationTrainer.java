@@ -5,11 +5,11 @@ import me.hii488.control.trainers.costfunctions.Cost;
 import me.hii488.network.Layer;
 import me.hii488.network.Network;
 
-public class StandardTrainer extends Trainer {
+public class BackpropagationTrainer extends Trainer {
 	
 	public Network network;
 	
-	public StandardTrainer(Network n, DataController da, Cost c, double learningRate) {
+	public BackpropagationTrainer(Network n, DataController da, Cost c, double learningRate) {
 		network = n;
 		data = da;
 		cost = c;

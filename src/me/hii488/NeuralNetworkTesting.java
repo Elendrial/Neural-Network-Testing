@@ -1,4 +1,4 @@
-package me.hii488.control;
+package me.hii488;
 
 import me.hii488.tests.StandardNetworkTest;
 
