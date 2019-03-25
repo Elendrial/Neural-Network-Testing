@@ -65,6 +65,12 @@ public class StandardTrainer extends Trainer {
 		Network n = network.cloneStructure();
 		Layer[] layers = n.getLayers();
 		
+		for(int i = 0; i < layers.length; i++) {
+			for(int j = 0; j < layers[i].nodes.length; j++) {
+				layers[i].nodes[j].weightedInput = network.getLayers()[i].nodes[j].weightedInput;
+			}
+		}
+		
 		int lastLayer = layers.length-1;
 		
 		// Work out the output error
@@ -84,9 +90,9 @@ public class StandardTrainer extends Trainer {
 				for(int k = 0; k < layers[i+1].nodes.length; k++)
 					nodeError += network.getLayers()[i+1].nodes[k].weights[j] * layers[i+1].nodes[k].bias * activationPrime;
 				
-				layers[i].nodes[i].bias = nodeError;
+				layers[i].nodes[j].bias = nodeError;
 				
-
+				
 				// Weight Error:
 				activation = layers[i].nodes[j].activation.function(layers[i].nodes[j].weightedInput);
 				for(int k = 0; k < layers[i+1].nodes.length; k++)
@@ -94,7 +100,6 @@ public class StandardTrainer extends Trainer {
 				
 			}
 		}
-		
 		
 		return n;
 	}

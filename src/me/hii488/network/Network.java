@@ -22,6 +22,7 @@ public class Network implements Serializable {
 	public Network(int inputs, int[] hiddenLayers, int outputs, Activation act) {
 		layers = new Layer[hiddenLayers.length+1];
 		
+		// Hidden Layers
 		if(hiddenLayers.length > 0) {
 			layers[0] = new Layer(hiddenLayers[0], inputs, act);
 		
@@ -29,9 +30,9 @@ public class Network implements Serializable {
 				layers[i] = new Layer(hiddenLayers[i], hiddenLayers[i-1], act);
 			}
 			
+		// Output Layer
 			layers[layers.length - 1] = new Layer(outputs, hiddenLayers[hiddenLayers.length-1], act);
 		}
-		
 		else {
 			layers[0] = new Layer(outputs, inputs, act);
 		}

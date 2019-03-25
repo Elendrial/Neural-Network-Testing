@@ -17,6 +17,10 @@ public class Layer implements Serializable{
 		}
 	}
 	
+	public Layer(Node[] nodes) {
+		this.nodes = nodes;
+	}
+	
 	public double[] getOutput(double[] input) {
 		double[] output = new double[nodes.length];
 		for(int i = 0; i < output.length; i++) {

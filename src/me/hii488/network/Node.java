@@ -27,6 +27,7 @@ public class Node implements Serializable{
 		for(int i = 0; i < weights.length; i++) {
 			weights[i] = Network.random.nextGaussian();
 		}
+		bias = Network.random.nextGaussian();
 	}
 
 	public double getOutput(double[] input) {

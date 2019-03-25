@@ -17,24 +17,29 @@ import me.hii488.network.nodeActivations.SigmoidActivation;
 
 public class StandardNetworkTest {
 	
-	// Test if it can check whether there are 5+ inputs=1 or not.
+	// Test if it can check whether there are 2+ inputs=1 or not.
 	public static boolean simpleTest() {
-		Network net = new Network(10, new int[] {50}, 1, new SigmoidActivation());
+		int inputs = 3;
+		Network net = new Network(inputs, new int[] {3}, 1, new SigmoidActivation());
 		net.randomise();
 		
 		DataController data = new DataController() {
-			int inputs = 10;
+			int inputs;
+			int lastOut = 0;
 			double expectedOut;
 			
 			@Override
 			public double[] getNextTrainingInput() {
 				double[] d = new double[inputs];
+				lastOut++;
+				lastOut%=8;
+				expectedOut = 0;
 				for(int i = 0; i < inputs; i++) {
-					d[i] = Network.random.nextInt(2);
+					d[i] = (lastOut >> i) & 1;
 					expectedOut += d[i];
 				}
 				
-				if(expectedOut > 5) expectedOut = 1;
+				if(expectedOut > inputs/2) expectedOut = 1;
 				else expectedOut = 0;
 				
 				return d;
@@ -57,9 +62,13 @@ public class StandardNetworkTest {
 			
 		};
 		
+		data.setInputSize(inputs);
 		Trainer t = new StandardTrainer(net, data, new QuadraticCost(), 1);
+		
+		System.out.println(t.test(60));
 		doTheTests(t);
-		doLotsOfTests(t);
+		for(int i = 0; i < 500; i++)	{doLotsOfTests(t, 8); System.out.println(t.test(60));}
+		System.out.println(t.test(60));
 		return doTheTests(t);
 	}
 	
@@ -161,7 +170,7 @@ public class StandardNetworkTest {
 		
 		Trainer t = new StandardTrainer(net, data, new QuadraticCost(), 0.5);
 		doTheTests(t);
-		for(int i = 0; i < 100; i++) doLotsOfTests(t);
+		for(int i = 0; i < 100; i++) doLotsOfTests(t, 100);
 		boolean output = doTheTests(t);
 		
 		try {
@@ -191,32 +200,16 @@ public class StandardNetworkTest {
 	}
 	
 	private static boolean doTheTests(Trainer t) {
-		System.out.println(t.test(100));
-		t.train(100, 30);
-		System.out.println(t.test(1000));
-		t.train(100, 30);
-		System.out.println(t.test(1000));
-		t.train(100, 30);
-		System.out.println(t.test(1000));
-		t.train(100, 30);
-		System.out.println(t.test(1000));
-	//	t.train(1000, 30);
-	//	System.out.println(t.test(1000));
-	//	t.train(1000, 30);
-	//	System.out.println(t.test(1000));
+		t.train(100, 8);
+		t.train(100, 8);
+		t.train(100, 8);
+		t.train(100, 8);
 		
 		return t.test(60) > 0.9;
 	}
 	
-	private static void doLotsOfTests(Trainer t) {
-		t.train(1000, 50);
-		System.out.println(t.test(1000));
-		t.train(1000, 50);
-		System.out.println(t.test(1000));
-		t.train(1000, 50);
-		System.out.println(t.test(1000));
-		t.train(1000, 50);
-		System.out.println(t.test(1000));
+	private static void doLotsOfTests(Trainer t, int mutationsToTry) {
+		t.train(1000, mutationsToTry);
 	}
 	
 }

@@ -5,8 +5,7 @@ import me.hii488.tests.StandardNetworkTest;
 public class NeuralNetworkTesting {
 	
 	public static void main(String[] args) {
-		StandardNetworkTest.simpleTest();
-		
+		System.out.println(StandardNetworkTest.simpleTest());
 	}
 	
 }
